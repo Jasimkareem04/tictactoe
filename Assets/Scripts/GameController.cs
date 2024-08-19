@@ -19,7 +19,6 @@ public class GameController : MonoBehaviour
         {
             buttons[i].enabled = true;
             buttons[i].GetComponent<Image>().sprite = null;
-           // buttons[i].image.color = new Color(0, 0, 0, 0);
         }
     }
 
