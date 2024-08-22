@@ -7,18 +7,27 @@ public class GameController : MonoBehaviour
     public Sprite[] PlayerImage;
     public Button[] buttons;
     SpriteRenderer sprite;
+    public int[] markedSpace; //To know marked spaceses
+    int turncount;
+    public GameObject WinnerPanel;
+    public Text WinnerTxt;
     // Start is called before the first frame update
     void Start()
     {
-        GameSetup();  
+        GameSetup();
     }
-    void GameSetup()
+    void GameSetup() 
     {
         WhoseTurn = 0;
-        for(int i = 0; i < buttons.Length; i++)
+        turncount = 0;
+        for (int i = 0; i < buttons.Length; i++)
         {
             buttons[i].enabled = true;
             buttons[i].GetComponent<Image>().sprite = null;
+        }
+        for (int i = 0; i < markedSpace.Length; i++)
+        {
+            markedSpace[i] = -10;
         }
     }
 
@@ -26,6 +35,13 @@ public class GameController : MonoBehaviour
     {
         buttons[whichBtn].image.sprite = PlayerImage[WhoseTurn];
         buttons[whichBtn].enabled = false;
+
+        markedSpace[whichBtn] = WhoseTurn + 1;
+        turncount++;
+        if (turncount > 4)
+        {
+            checkWinner();
+        }
 
         if (WhoseTurn == 0)
         {
@@ -37,58 +53,39 @@ public class GameController : MonoBehaviour
         }
     }
 
-    void winner(int a,int b,int c)
+    void checkWinner()
     {
-        for(int i = 0;i < buttons.Length;i++)
+        int s1 = markedSpace[0] + markedSpace[1] + markedSpace[2];
+        int s2 = markedSpace[3] + markedSpace[4] + markedSpace[5];
+        int s3 = markedSpace[6] + markedSpace[7] + markedSpace[8];
+        int s4 = markedSpace[0] + markedSpace[3] + markedSpace[6];
+        int s5 = markedSpace[1] + markedSpace[4] + markedSpace[7];
+        int s6 = markedSpace[2] + markedSpace[5] + markedSpace[8];
+        int s7 = markedSpace[0] + markedSpace[4] + markedSpace[8];
+        int s8 = markedSpace[2] + markedSpace[4] + markedSpace[6];
+        var solution = new int[] { s1, s2, s3, s4, s5, s6, s7, s8 };
+        for (int i = 0; i < solution.Length; i++)
         {
-            if(i==a|| i==b || i==c)
+            if (solution[i] == 3 * (WhoseTurn + 1)) //check 3 spaces contains same icon
             {
-                continue;
-            }
-            else
-            {
-               buttons[i].image.color = new Color(0, 0, 0, 0.5f);
+                WinnerDisplay();
+                return;
             }
         }
     }
-
-    // Update is called once per frame
-    void Update()
+    void WinnerDisplay()
     {
-        if (buttons[0].image.sprite == PlayerImage[0] && buttons[1].image.sprite == PlayerImage[0] && buttons[2].image.sprite == PlayerImage[0] )
+        WinnerPanel.gameObject.SetActive(true);
+        if(WhoseTurn == 0)
         {
-            winner(0,1,2);  
+            WinnerTxt.text = "Player X won!";
         }
-        else if(buttons[3].image.sprite == PlayerImage[0] && buttons[4].image.sprite == PlayerImage[0] && buttons[5].image.sprite == PlayerImage[0])
+        else if(WhoseTurn == 1)
         {
-            winner(3,4,5);
+            WinnerTxt.text = "Player O won!";
         }
-        else if (buttons[6].image.sprite == PlayerImage[0] && buttons[7].image.sprite == PlayerImage[0] && buttons[8].image.sprite == PlayerImage[0])
-        {
-            winner(6,7,8);
-        }
-        else if (buttons[0].image.sprite == PlayerImage[0] && buttons[3].image.sprite == PlayerImage[0] && buttons[6].image.sprite == PlayerImage[0])
-        {
-            winner(0,3,6);
-        }
-        else if (buttons[1].image.sprite == PlayerImage[0] && buttons[4].image.sprite == PlayerImage[0] && buttons[7].image.sprite == PlayerImage[0])
-        {
-            winner(1,4,7);
-        }
-        else if (buttons[2].image.sprite == PlayerImage[0] && buttons[5].image.sprite == PlayerImage[0] && buttons[8].image.sprite == PlayerImage[0])
-        {
-            winner(2,5,8);
-        }
-        else if (buttons[0].image.sprite == PlayerImage[0] && buttons[4].image.sprite == PlayerImage[0] && buttons[8].image.sprite == PlayerImage[0])
-        {
-            winner(0,4,8);
-        }
-        else if (buttons[2].image.sprite == PlayerImage[0] && buttons[4].image.sprite == PlayerImage[0] && buttons[6].image.sprite == PlayerImage[0])
-        {
-            winner(2,4,6);
-        }
-
-
     }
-   
 }
+
+  
+
