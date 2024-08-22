@@ -7,7 +7,7 @@ public class GameController : MonoBehaviour
     public Sprite[] PlayerImage;
     public Button[] buttons;
     SpriteRenderer sprite;
-    public int[] markedSpace; //To know marked spaceses
+    public int[] markedSpace; //To know marked spaces
     int turncount;
     public GameObject WinnerPanel;
     public Text WinnerTxt;
