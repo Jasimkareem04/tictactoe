@@ -1,3 +1,4 @@
+using System.Net;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,6 +12,9 @@ public class GameController : MonoBehaviour
     int turncount;
     public GameObject WinnerPanel;
     public Text WinnerTxt;
+    public static bool BotTurn;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -38,22 +42,36 @@ public class GameController : MonoBehaviour
 
         markedSpace[whichBtn] = WhoseTurn + 1;
         turncount++;
+<<<<<<< Updated upstream
         if (turncount > 4)
         {
             checkWinner();
         }
 
         if (WhoseTurn == 0)
+=======
+        if(turncount > 4)
+        {
+          checkWinner();
+        }
+        
+        if(BotTurn == true)
+        {
+            bot();
+        }
+        else if (BotTurn == false && WhoseTurn == 0)
+>>>>>>> Stashed changes
         {
             WhoseTurn = 1;
+            
         }
-        else
+        else if (BotTurn == false)
         {
             WhoseTurn = 0;
         }
     }
 
-    void checkWinner()
+    public void checkWinner()
     {
         int s1 = markedSpace[0] + markedSpace[1] + markedSpace[2];
         int s2 = markedSpace[3] + markedSpace[4] + markedSpace[5];
@@ -68,12 +86,16 @@ public class GameController : MonoBehaviour
         {
             if (solution[i] == 3 * (WhoseTurn + 1)) //check 3 spaces contains same icon
             {
+                if(BotTurn == true)
+                {
+                    BotTurn = false;
+                }
                 WinnerDisplay();
                 return;
             }
         }
     }
-    void WinnerDisplay()
+    public void WinnerDisplay()
     {
         WinnerPanel.gameObject.SetActive(true);
         if(WhoseTurn == 0)
@@ -85,6 +107,27 @@ public class GameController : MonoBehaviour
             WinnerTxt.text = "Player O won!";
         }
     }
+<<<<<<< Updated upstream
+=======
+
+    public void bot()
+    {
+        WhoseTurn = 1;
+        for (int i = Random.Range(0, markedSpace.Length); i < markedSpace.Length;i++)
+        {
+            if(markedSpace[i] == -10)
+            {                  
+                buttons[i].image.sprite = PlayerImage[WhoseTurn];
+                buttons[i].interactable = false;
+                markedSpace[i] = WhoseTurn + 1;
+                checkWinner();
+                turncount++;                
+                WhoseTurn = 0;
+                break;
+            }
+        }
+    }
+>>>>>>> Stashed changes
 }
 
   
