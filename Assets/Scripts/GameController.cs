@@ -42,17 +42,10 @@ public class GameController : MonoBehaviour
 
         markedSpace[whichBtn] = WhoseTurn + 1;
         turncount++;
-<<<<<<< Updated upstream
+
         if (turncount > 4)
         {
             checkWinner();
-        }
-
-        if (WhoseTurn == 0)
-=======
-        if(turncount > 4)
-        {
-          checkWinner();
         }
         
         if(BotTurn == true)
@@ -60,7 +53,6 @@ public class GameController : MonoBehaviour
             bot();
         }
         else if (BotTurn == false && WhoseTurn == 0)
->>>>>>> Stashed changes
         {
             WhoseTurn = 1;
             
@@ -107,9 +99,6 @@ public class GameController : MonoBehaviour
             WinnerTxt.text = "Player O won!";
         }
     }
-<<<<<<< Updated upstream
-=======
-
     public void bot()
     {
         WhoseTurn = 1;
@@ -127,7 +116,6 @@ public class GameController : MonoBehaviour
             }
         }
     }
->>>>>>> Stashed changes
 }
 
   
