@@ -15,6 +15,7 @@ public class GameController : MonoBehaviour
     public Text WinnerTxt;
     public static bool BotTurn;
     public static bool BotTurn2;
+    public static bool BotTurn3;
     int s1, s2, s3, s4, s5, s6, s7, s8;
     public int[] solution;
 
@@ -59,6 +60,10 @@ public class GameController : MonoBehaviour
         else if(BotTurn2 == true)
         {
             botLvl2();
+        }
+        else if (BotTurn3 == true)
+        {
+            botLvl3();
         }
         else if (BotTurn == false && WhoseTurn == 0)
         {
@@ -142,7 +147,7 @@ public class GameController : MonoBehaviour
                                {
                                 if (markedSpace[j]==-10)
                                 {
-                                 blockPlayer(j); 
+                                 PlacePlayer(j); 
                                 }
                                }
                                break;
@@ -151,7 +156,7 @@ public class GameController : MonoBehaviour
                             {
                                 if (markedSpace[j] == -10)
                                 {
-                                    blockPlayer(j);
+                                    PlacePlayer(j);
                                 }
                             }
                             break;
@@ -160,7 +165,7 @@ public class GameController : MonoBehaviour
                             {
                                 if (markedSpace[j] == -10)
                                 {
-                                    blockPlayer(j);
+                                    PlacePlayer(j);
                                 }
                             }
                             break;
@@ -169,7 +174,7 @@ public class GameController : MonoBehaviour
                             {
                                 if (markedSpace[j] == -10)
                                 {
-                                    blockPlayer(j);
+                                    PlacePlayer(j);
                                 }
                             }
                             break;
@@ -178,7 +183,7 @@ public class GameController : MonoBehaviour
                             {
                                 if (markedSpace[j] == -10)
                                 {
-                                    blockPlayer(j);
+                                    PlacePlayer(j);
                                 }
                             }
                             break;
@@ -187,7 +192,7 @@ public class GameController : MonoBehaviour
                             {
                                 if (markedSpace[j] == -10)
                                 {
-                                    blockPlayer(j);
+                                    PlacePlayer(j);
                                 }
                             }
                             break;
@@ -196,7 +201,7 @@ public class GameController : MonoBehaviour
                             {
                                 if (markedSpace[j] == -10)
                                 {
-                                    blockPlayer(j);
+                                    PlacePlayer(j);
                                 }
                             }
                             break;
@@ -205,7 +210,7 @@ public class GameController : MonoBehaviour
                             {
                                 if (markedSpace[j] == -10)
                                 {
-                                    blockPlayer(j);
+                                    PlacePlayer(j);
                                 }
                             }
                             break;
@@ -222,7 +227,106 @@ public class GameController : MonoBehaviour
          bot();
        }
     }
-    public void blockPlayer(int j)
+    public void botLvl3()
+    {
+        bool winningChance = false;
+        checkWinner();
+        for (int i = 0; i < solution.Length; i++)
+        {
+            if (solution[i] == -6) //check 2 spaces contains Oicon/botIcon
+            {
+                winningChance = true;
+                Debug.Log("Bot3 found");
+                WhoseTurn = 1;
+                switch (i)
+                {
+                    case 0:
+                        for (int j = 0; j < 3; j++)
+                        {
+                            if (markedSpace[j] == -10)
+                            {
+                                PlacePlayer(j);
+                            }
+                        }
+                        break;
+                    case 1:
+                        for (int j = 3; j < 6; j++)
+                        {
+                            if (markedSpace[j] == -10)
+                            {
+                                PlacePlayer(j);
+                            }
+                        }
+                        break;
+                    case 2:
+                        for (int j = 6; j < 9; j++)
+                        {
+                            if (markedSpace[j] == -10)
+                            {
+                                PlacePlayer(j);
+                            }
+                        }
+                        break;
+                    case 3:
+                        for (int j = 0; j < 7; j = j + 3)
+                        {
+                            if (markedSpace[j] == -10)
+                            {
+                                PlacePlayer(j);
+                            }
+                        }
+                        break;
+                    case 4:
+                        for (int j = 1; j < 8; j = j + 3)
+                        {
+                            if (markedSpace[j] == -10)
+                            {
+                                PlacePlayer(j);
+                            }
+                        }
+                        break;
+                    case 5:
+                        for (int j = 2; j < 9; j = j + 3)
+                        {
+                            if (markedSpace[j] == -10)
+                            {
+                                PlacePlayer(j);
+                            }
+                        }
+                        break;
+                    case 6:
+                        for (int j = 0; j < 9; j = j + 4)
+                        {
+                            if (markedSpace[j] == -10)
+                            {
+                                PlacePlayer(j);
+                            }
+                        }
+                        break;
+                    case 7:
+                        for (int j = 2; j < 7; j = j + 2)
+                        {
+                            if (markedSpace[j] == -10)
+                            {
+                                PlacePlayer(j);
+                            }
+                        }
+                        break;
+                    default:
+                        Debug.Log("default");
+                        break;
+
+
+                }
+                break;
+            }
+        }
+        if (!winningChance)
+        {
+            botLvl2();
+        }
+    }
+    public void PlacePlayer(int j)
     {
         buttons[j].image.sprite = PlayerImage[WhoseTurn];
         buttons[j].enabled = false;
