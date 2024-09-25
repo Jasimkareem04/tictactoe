@@ -1,5 +1,3 @@
-using System.Net;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,18 +11,14 @@ public class GameController : MonoBehaviour
     int turncount;
     public GameObject WinnerPanel;
     public Text WinnerTxt;
-    public static bool BotTurn;
-    public static bool BotTurn2;
-    public static bool BotTurn3;
-    int s1, s2, s3, s4, s5, s6, s7, s8;
     public int[] solution;
-
-
+    
     // Start is called before the first frame update
     void Start()
     {
         GameSetup();
     }
+   
     public void GameSetup() 
     {
         WhoseTurn = 0;
@@ -53,24 +47,23 @@ public class GameController : MonoBehaviour
             checkWinner();
         }
         
-        if(BotTurn == true)
+        if(MainMenu.Instance.EasyLvl)
         {
-            bot();
+            RandomBot();
         }
-        else if(BotTurn2 == true)
+        else if(MainMenu.Instance.MediumLvl)
         {
-            botLvl2();
+            TrytoBlock();
         }
-        else if (BotTurn3 == true)
+        else if (MainMenu.Instance.HardLvl)
         {
-            botLvl3();
+            TrytoWin();
         }
-        else if (BotTurn == false && WhoseTurn == 0)
+        else if (MainMenu.Instance.EasyLvl == false && WhoseTurn == 0)
         {
             WhoseTurn = 1;
-            
         }
-        else if (BotTurn == false)
+        else if (MainMenu.Instance.EasyLvl == false)
         {
             WhoseTurn = 0;
         }
@@ -78,22 +71,22 @@ public class GameController : MonoBehaviour
 
     public void checkWinner()
     {
-        s1 = markedSpace[0] + markedSpace[1] + markedSpace[2];
-        s2 = markedSpace[3] + markedSpace[4] + markedSpace[5];
-        s3 = markedSpace[6] + markedSpace[7] + markedSpace[8];
-        s4 = markedSpace[0] + markedSpace[3] + markedSpace[6];
-        s5 = markedSpace[1] + markedSpace[4] + markedSpace[7];
-        s6 = markedSpace[2] + markedSpace[5] + markedSpace[8];
-        s7 = markedSpace[0] + markedSpace[4] + markedSpace[8];
-        s8 = markedSpace[2] + markedSpace[4] + markedSpace[6];
-        solution = new int[] { s1, s2, s3, s4, s5, s6, s7, s8 };
+        solution = new int[] { markedSpace[0] + markedSpace[1] + markedSpace[2],
+                               markedSpace[3] + markedSpace[4] + markedSpace[5],
+                               markedSpace[6] + markedSpace[7] + markedSpace[8],
+                               markedSpace[0] + markedSpace[3] + markedSpace[6],
+                               markedSpace[1] + markedSpace[4] + markedSpace[7],
+                               markedSpace[2] + markedSpace[5] + markedSpace[8],
+                               markedSpace[0] + markedSpace[4] + markedSpace[8],
+                               markedSpace[2] + markedSpace[4] + markedSpace[6]
+            };
         for (int i = 0; i < solution.Length; i++)
         {
             if (solution[i] == 3 * (WhoseTurn + 1)) //check 3 spaces contains same icon
             {
-                if(BotTurn == true)
+                if(MainMenu.Instance.EasyLvl == true)
                 {
-                    BotTurn = false;
+                    MainMenu.Instance.EasyLvl = false;
                 }
                 WinnerDisplay();
                 return;
@@ -112,7 +105,7 @@ public class GameController : MonoBehaviour
             WinnerTxt.text = "Player O won!";
         }
     }
-    public void bot()
+    public void RandomBot()
     {
         WhoseTurn = 1;
         for (int i = Random.Range(0, markedSpace.Length); i < markedSpace.Length;i++)
@@ -129,7 +122,7 @@ public class GameController : MonoBehaviour
             }
         }
     }
-    public void botLvl2()
+    public void TrytoBlock()
     {
         bool blocked = false;
         checkWinner();
@@ -224,10 +217,10 @@ public class GameController : MonoBehaviour
            }
        if(!blocked)
        {
-         bot();
+         RandomBot();
        }
     }
-    public void botLvl3()
+    public void TrytoWin()
     {
         bool winningChance = false;
         checkWinner();
@@ -323,7 +316,7 @@ public class GameController : MonoBehaviour
         }
         if (!winningChance)
         {
-            botLvl2();
+            TrytoBlock();
         }
     }
     public void PlacePlayer(int j)

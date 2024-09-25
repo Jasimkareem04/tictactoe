@@ -10,6 +10,16 @@ public class MainMenu : MonoBehaviour
     public Button MediumBtn;
     public Button HardBtn;
 
+    public bool EasyLvl;
+    public bool MediumLvl;
+    public bool HardLvl;
+    public static MainMenu Instance;
+
+
+    public void Awake()
+    {
+        Instance = this;
+    }
 
     public void Start()
     {
@@ -20,9 +30,9 @@ public class MainMenu : MonoBehaviour
     public void MultiPlayer()
     {
         SceneManager.LoadSceneAsync(0);
-        GameController.BotTurn = false;
-        GameController.BotTurn2 = false;
-        GameController.BotTurn3 = false;
+        EasyLvl = false;
+        MediumLvl = false;
+        HardLvl = false;
 
     }
     public void SinglePlayer()
@@ -34,22 +44,22 @@ public class MainMenu : MonoBehaviour
     public void Medium()
     {
         SceneManager.LoadSceneAsync(0);
-        GameController.BotTurn2 = true;
-        GameController.BotTurn = false;
-        GameController.BotTurn3 = false;
+        MediumLvl = true;
+        EasyLvl = false;
+        HardLvl = false;
     }
     public void Easy()
     {
        SceneManager.LoadSceneAsync(0);
-       GameController.BotTurn = true;
-       GameController.BotTurn2 = false;
-       GameController.BotTurn3 = false;
+       EasyLvl = true;
+       MediumLvl = false;
+       HardLvl = false;
     }
     public void Hard()
     {
         SceneManager.LoadSceneAsync(0);
-        GameController.BotTurn = false;
-        GameController.BotTurn2 = false;
-        GameController.BotTurn3 = true;
+        EasyLvl = false;
+        MediumLvl = false;
+        HardLvl = true;
     }
 }

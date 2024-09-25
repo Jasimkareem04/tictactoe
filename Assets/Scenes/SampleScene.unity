@@ -968,6 +968,9 @@ MonoBehaviour:
   markedSpace: 000000000000000000000000000000000000000000000000000000000000000000000000
   WinnerPanel: {fileID: 1955400931}
   WinnerTxt: {fileID: 1509694043}
+  EasyLvl: 0
+  MediumLvl: 0
+  HardLvl: 0
   solution: 000000000000000000000000000000000000000000000000000000000000000000000000
 --- !u!4 &1139174636
 Transform:
@@ -1878,7 +1881,7 @@ CanvasRenderer:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 1139174636}
   - {fileID: 519420032}
   - {fileID: 797772212}
   - {fileID: 212200981}
-  - {fileID: 1139174636}
