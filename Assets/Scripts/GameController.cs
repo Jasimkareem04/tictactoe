@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
@@ -91,12 +92,20 @@ public class GameController : MonoBehaviour
                 WinnerDisplay();
                 return;
             }
+            else if (turncount == 9)
+            {
+                WinnerDisplay();
+            }
         }
     }
     public void WinnerDisplay()
     {
         WinnerPanel.gameObject.SetActive(true);
-        if(WhoseTurn == 0)
+        if (turncount == 9)
+        {
+            WinnerTxt.text = "Draw!";
+        }
+        else if (WhoseTurn == 0)
         {
             WinnerTxt.text = "Player X won!";
         }
@@ -327,6 +336,16 @@ public class GameController : MonoBehaviour
         checkWinner();
         turncount++;
         WhoseTurn = 0;
+    }
+
+    public void Restart()
+    {
+        SceneManager.LoadSceneAsync(0);
+    }
+
+    public void LoadMainMenu()
+    {
+        SceneManager.LoadSceneAsync(1);
     }
 }
 
